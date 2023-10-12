@@ -11,3 +11,21 @@ EdgeTTS allows you to use Microsoft Edge's online text-to-speech service from C#
 ```
 PM> Install-Package EdgeTTS
 ```
+
+---  
+
+### Example  
+
+```C#
+var OUTPUT_FILE = "hello.mp3";
+
+var communicate = new Communicate(
+    "hello world", "zh-CN-YunxiNeural");
+await communicate.Save(OUTPUT_FILE);
+```
+
+---  
+
+### Declare  
+
+This repo is not an official [edge-tts](https://github.com/rany2/edge-tts) product.  

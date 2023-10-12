@@ -321,10 +321,6 @@ namespace EdgeTTS
                     {
                         result.Data?.CopyTo(audioStream);
                     }
-                    if (result.Type == "WordBoundary")
-                    {
-                        Console.WriteLine($"{result.Offset}, {result.Duration}, {result.Text}");
-                    }
                 }, token);
             }
         }
