@@ -280,9 +280,6 @@ namespace EdgeTTS
                             if (result.Stream.Length < headerLength + 2)
                                 throw new Exception("We received a binary message, but it is missing the audio data.");
 
-                            if (!audioWasReceived && result.Stream.Length <= headerLength + 2)
-                                throw new Exception("We received a binary message, but it is missing the audio data.");
-
                             result.Stream.Seek(headerLength, SeekOrigin.Current);
 
                             callback(new AudioResult
