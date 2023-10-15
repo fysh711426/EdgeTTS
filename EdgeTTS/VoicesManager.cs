@@ -14,10 +14,10 @@ namespace EdgeTTS
     /// </summary>
     public class VoicesManager
     {
-        private List<Voice> _voices = new();
-        private bool _calledCreate = false;
+        protected List<Voice> _voices = new();
+        protected bool _calledCreate = false;
 
-        private VoicesManager()
+        protected VoicesManager()
         {
         }
 

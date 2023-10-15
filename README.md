@@ -23,6 +23,25 @@ var communicate = new Communicate(
 await communicate.Save(OUTPUT_FILE);
 ```
 
+### Stream example  
+
+```C#
+var communicate = new Communicate(TEXT, "zh-CN-YunxiNeural");
+
+using (var stream = new FileStream(
+    OUTPUT_FILE, FileMode.Create, FileAccess.Write))
+{
+    await communicate.Stream((result) =>
+    {
+        if (result.Type == "audio")
+            result.Data?.CopyTo(stream);
+
+        if (result.Type == "WordBoundary")
+            Console.WriteLine(JsonConvert.SerializeObject(result));
+    });
+}
+```
+
 ### VoicesManager example  
 
 ```C#
@@ -39,6 +58,36 @@ var voices = manager.Find(gender: "Male", language: "es");
 var communicate = new Communicate(TEXT, voices[0].Name);
 await communicate.Save(OUTPUT_FILE);
 ```  
+
+### SubMaker example  
+
+```C#
+var submaker = new SubMaker();
+var communicate = new Communicate(TEXT, "zh-CN-YunxiNeural");
+
+using (var stream = new FileStream(
+    OUTPUT_FILE, FileMode.Create, FileAccess.Write))
+{
+    await communicate.Stream((result) =>
+    {
+        if (result.Type == "audio")
+            result.Data?.CopyTo(stream);
+
+        if (result.Type == "WordBoundary")
+            submaker.CreateSub(Tuple.Create(
+                result.Offset, result.Duration), result.Text);
+    });
+}
+
+using (var stream = new FileStream(
+    WEBVTT_FILE, FileMode.Create, FileAccess.Write))
+{
+    using (var writer = new StreamWriter(stream))
+    {
+        await writer.WriteAsync(submaker.GenerateSubs());
+    }
+}
+```
 
 ---  
 
