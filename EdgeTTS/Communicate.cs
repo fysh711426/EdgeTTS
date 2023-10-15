@@ -327,7 +327,7 @@ namespace EdgeTTS
         /// </summary>
         /// <param name="data">The data to be parsed.</param>
         /// <returns></returns>
-        protected static Tuple<Dictionary<string, string>, string> getHeadersAndData(string data)
+        protected static ValueTuple<Dictionary<string, string>, string> getHeadersAndData(string data)
         {
             var headers = new Dictionary<string, string>();
 
@@ -344,7 +344,7 @@ namespace EdgeTTS
                 var value = split[1];
                 headers[key] = value;
             }
-            return Tuple.Create(headers, data.Substring(index + 4));
+            return (headers, data.Substring(index + 4));
         }
 
         /// <summary>

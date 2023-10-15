@@ -10,17 +10,15 @@ namespace EdgeTTS
     /// </summary>
     public class SubMaker
     {
-        protected List<Tuple<double, double>> _offset = new();
+        protected List<ValueTuple<double, double>> _offset = new();
         protected List<string> _subs = new();
 
         public SubMaker()
         {
         }
 
-        public void CreateSub(Tuple<int, int> timestamp, string text)
-            => CreateSub(Tuple.Create(
-                (double)timestamp.Item1, 
-                (double)timestamp.Item2), text);
+        public void CreateSub(ValueTuple<int, int> timestamp, string text)
+            => CreateSub(((double)timestamp.Item1, (double)timestamp.Item2), text);
 
         /// <summary>
         /// CreateSub creates a subtitle with the given timestamp and text
@@ -28,9 +26,9 @@ namespace EdgeTTS
         /// </summary>
         /// <param name="timestamp">The offset and duration of the subtitle.</param>
         /// <param name="text">The text of the subtitle.</param>
-        public void CreateSub(Tuple<double, double> timestamp, string text)
+        public void CreateSub(ValueTuple<double, double> timestamp, string text)
         {
-            _offset.Add(Tuple.Create(timestamp.Item1, timestamp.Item1 + timestamp.Item2));
+            _offset.Add((timestamp.Item1, timestamp.Item1 + timestamp.Item2));
             _subs.Add(text);
         }
 
@@ -52,7 +50,7 @@ namespace EdgeTTS
             var subStateStart = -1.0d;
             var subStateSubs = "";
 
-            var zip = _offset.Zip(_subs, (a, b) => Tuple.Create(a, b));
+            var zip = _offset.Zip(_subs, (a, b) => (a, b));
 
             var idx = 0;
             foreach (var tuple in zip)

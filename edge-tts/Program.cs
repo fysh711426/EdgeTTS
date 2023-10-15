@@ -23,8 +23,7 @@ namespace edge_tts
 
             var communicate = new Communicate(TEXT, "zh-CN-YunxiNeural");
 
-            using (var stream = new FileStream(
-                OUTPUT_FILE, FileMode.Create, FileAccess.Write))
+            using (var stream = File.Create(OUTPUT_FILE))
             {
                 await communicate.Stream((result) =>
                 {
@@ -65,8 +64,7 @@ namespace edge_tts
             var submaker = new SubMaker();
             var communicate = new Communicate(TEXT, "zh-CN-YunxiNeural");
 
-            using (var stream = new FileStream(
-                OUTPUT_FILE, FileMode.Create, FileAccess.Write))
+            using (var stream = File.Create(OUTPUT_FILE))
             {
                 await communicate.Stream((result) =>
                 {
@@ -74,18 +72,14 @@ namespace edge_tts
                         result.Data?.CopyTo(stream);
 
                     if (result.Type == "WordBoundary")
-                        submaker.CreateSub(Tuple.Create(
-                            result.Offset, result.Duration), result.Text);
+                        submaker.CreateSub(
+                            (result.Offset, result.Duration), result.Text);
                 });
             }
 
-            using (var stream = new FileStream(
-                WEBVTT_FILE, FileMode.Create, FileAccess.Write))
+            using (var writer = File.CreateText(WEBVTT_FILE))
             {
-                using (var writer = new StreamWriter(stream))
-                {
-                    await writer.WriteAsync(submaker.GenerateSubs());
-                }
+                await writer.WriteAsync(submaker.GenerateSubs());
             }
         }
     }
