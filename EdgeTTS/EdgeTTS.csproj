@@ -7,7 +7,7 @@
     <PackageId>EdgeTTS</PackageId>
     <Description>This repo is C# implementation of edge-tts.
 EdgeTTS allows you to use Microsoft Edge's online text-to-speech service from C#.</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageProjectUrl>https://github.com/fysh711426/UndetectedChromeDriver</PackageProjectUrl>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <PackageLicenseFile></PackageLicenseFile>
